@@ -5,10 +5,10 @@ from pymongo.errors import DuplicateKeyError
 
 
 def get_db():
-    db = getattr(g, "_database", None)
+    db = getattr(g, '_database', None)
 
     DB_URI = current_app.config['DATABASE_URL']
-    DB_NAME = current_app.config['DATBASE_NAME']
+    DB_NAME = str(current_app.config['DATABASE_NAME'])
 
     if db is None:
         db = g._database = MongoClient(DB_URI)[DB_NAME]
