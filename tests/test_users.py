@@ -11,7 +11,7 @@ test_user = {
 
 
 @pytest.mark.users
-def test_registration(client, db):
+def test_registration(client):
     delete_user(test_user['email'])
     add_user(test_user)
 

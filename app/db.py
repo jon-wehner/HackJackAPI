@@ -20,7 +20,7 @@ db = LocalProxy(get_db)
 
 
 def get_user(email):
-    user = db.users.findOne({"email": email})
+    user = db.users.find_one({"email": email})
     return user
 
 
@@ -39,4 +39,5 @@ def add_user(user):
 
 
 def delete_user(email):
-    db.users.deleteOne(email)
+    db.users.delete_one({"email": email})
+    return 'done'
