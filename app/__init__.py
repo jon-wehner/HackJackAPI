@@ -1,21 +1,22 @@
 import os
+import bcrypt
 from flask import Flask
 from flask_jwt_extended import (create_access_token,
                                 get_jwt_identity, jwt_required, JWTManager)
-from pymongo import MongoClient
+from flask_cors import CORS
+from flask_bcrypt import Bcrypt
 from pprint import pprint
-
+from .models import get_db
 
 app = Flask(__name__)
+
+bcrypt = Bcrypt(app)
+CORS(app)
 
 app.config['JWT_SECRET_KEY'] = os.environ.get('JWTSECRETKEY')
 jwt = JWTManager(app)
 
-client = MongoClient(os.environ.get('DATABASE_URL'))
-db = client.admin
-
-server_status_result = db.command("serverStatus")
-pprint(server_status_result)
+pprint(get_db())
 
 
 @app.route('/')
