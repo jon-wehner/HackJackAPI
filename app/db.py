@@ -19,14 +19,24 @@ def get_db():
 db = LocalProxy(get_db)
 
 
-def add_user(name, email, hashedpassword):
+def get_user(email):
+    user = db.users.findOne({"email": email})
+    return user
+
+
+def add_user(user):
     try:
         db.users.insert_one({
-            "name": name,
-            "email": email,
-            "password": hashedpassword,
+            "username": user['username'],
+            "name": user['name'],
+            "email": user['email'],
+            "password": user['hashedpassword'],
             "chips": 100
         }, {"writeConcern": "majority"})
         return {"success": "User Registered"}
     except DuplicateKeyError:
         return {"error": "Users Must have unique Email addresses"}
+
+
+def delete_user(email):
+    db.users.deleteOne(email)

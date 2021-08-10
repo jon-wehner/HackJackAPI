@@ -12,6 +12,7 @@ flask-cors = "*"
 flask-bcrypt = "*"
 flask-jwt-extended = "*"
 werkzeug = "*"
+pytest = "*"
 
 [dev-packages]
 pytest = "*"
