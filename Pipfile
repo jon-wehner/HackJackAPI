@@ -8,7 +8,9 @@ flask = "*"
 python-dotenv = "*"
 pymongo = "*"
 dnspython = "*"
-flask-login = "*"
+flask-cors = "*"
+flask-bcrypt = "*"
+flask-jwt-extended = "*"
 
 [dev-packages]
 pytest = "*"
