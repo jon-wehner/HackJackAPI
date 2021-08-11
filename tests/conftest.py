@@ -1,8 +1,7 @@
 import pytest
 from app import create_app
 from app.db import get_db
-from contextlib import contextmanager
-from flask import appcontext_pushed, g
+
 
 import os
 
