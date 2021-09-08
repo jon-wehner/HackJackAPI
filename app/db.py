@@ -27,10 +27,10 @@ def get_user(email):
 def add_user(user):
     try:
         db.users.insert_one({
-            "username": user['username'],
-            "name": user['name'],
-            "email": user['email'],
-            "password": user['hashedpassword'],
+            "username": user.username,
+            "name": user.name,
+            "email": user.email,
+            "password": user.hashed_password,
             "chips": 100
         }, {"writeConcern": "majority"})
         return {"success": "User Registered"}
