@@ -2,14 +2,13 @@ from flask import Blueprint, current_app, g, request
 from werkzeug.local import LocalProxy
 from app.db import add_user
 
-auth = Blueprint('auth', __name__, url_prefix='/auth')
+auth = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 
 def get_jwt():
     jwt = getattr(g, '_jwt', None)
     if jwt is None:
         jwt = g._jwt = current_app.config['JWT']
-
     return jwt
 
 

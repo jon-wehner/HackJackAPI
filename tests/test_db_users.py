@@ -1,4 +1,3 @@
-from py import test
 import pytest
 from app.db import add_user, delete_user, get_user
 
