@@ -30,6 +30,14 @@ class User():
         self.name = name
         self.hashed_password = hashed_password
 
+    def to_dict(self):
+        return {
+            "username": self.username,
+            "email": self.email,
+            "name": self.name,
+            "hashed_password": self.hashed_password
+        }
+
 
 @auth.route('/register', methods=['POST'])
 def register():
@@ -38,6 +46,6 @@ def register():
     email = data['email']
     name = data['name']
     hashed_password = bcrypt.generate_password_hash(data['password'])
-
-    user = add_user(User(username, email, name, hashed_password))
-    return user
+    new_user = User(username, email, name, hashed_password)
+    response = add_user(new_user.to_dict())
+    return response
