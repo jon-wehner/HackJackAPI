@@ -57,6 +57,5 @@ def login():
     email = data['email']
     password = data['password']
     user = get_user(email)
-    if user is None:
-        return {"error": 'Invalid Credentials'}
+    print(user)
     return 'response'
