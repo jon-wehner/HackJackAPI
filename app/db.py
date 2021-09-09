@@ -30,12 +30,12 @@ def add_user(user):
             "username": user['username'],
             "name": user['name'],
             "email": user['email'],
-            "password": user['hashed_password'],
+            "hashed_password": user['hashed_password'],
             "chips": 100
         }, {"writeConcern": "majority"})
         return {"success": "User Registered"}
     except DuplicateKeyError:
-        return {"error": "Users Must have unique Email addresses"}
+        return {"error": "Email Already In Use"}
 
 
 def delete_user(email):

@@ -1,6 +1,6 @@
 from flask import Blueprint, current_app, g, request
 from werkzeug.local import LocalProxy
-from app.db import add_user
+from app.db import add_user, get_user
 
 auth = Blueprint('auth', __name__, url_prefix='/api/auth')
 
@@ -49,3 +49,14 @@ def register():
     new_user = User(username, email, name, hashed_password)
     response = add_user(new_user.to_dict())
     return response
+
+
+@auth.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data['email']
+    password = data['password']
+    user = get_user(email)
+    if user is None:
+        return {"error": 'Invalid Credentials'}
+    return 'response'

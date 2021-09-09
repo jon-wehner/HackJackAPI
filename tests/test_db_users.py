@@ -5,7 +5,7 @@ from app.db import add_user, delete_user, get_user
 test_user = {
     'name': 'Bob Test',
     'email': 'bob@test.com',
-    'hashedpassword': 'password',
+    'hashed_password': 'password',
     'username': 'bob34'
 }
 
@@ -23,5 +23,5 @@ def test_registration(client):
 def test_duplicate_registration(client):
     response = add_user(test_user)
     assert response == {
-        "error": "Users Must have unique Email addresses"}
+        "error": "Email Already In Use"}
     delete_user(test_user['email'])
