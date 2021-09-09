@@ -1,15 +1,14 @@
 from flask import Blueprint, current_app, g, request
 from werkzeug.local import LocalProxy
-from app.db import add_user
+from app.db import add_user, get_user
 
-auth = Blueprint('auth', __name__, url_prefix='/auth')
+auth = Blueprint('auth', __name__, url_prefix='/api/auth')
 
 
 def get_jwt():
     jwt = getattr(g, '_jwt', None)
     if jwt is None:
         jwt = g._jwt = current_app.config['JWT']
-
     return jwt
 
 
@@ -31,6 +30,14 @@ class User():
         self.name = name
         self.hashed_password = hashed_password
 
+    def to_dict(self):
+        return {
+            "username": self.username,
+            "email": self.email,
+            "name": self.name,
+            "hashed_password": self.hashed_password
+        }
+
 
 @auth.route('/register', methods=['POST'])
 def register():
@@ -39,6 +46,16 @@ def register():
     email = data['email']
     name = data['name']
     hashed_password = bcrypt.generate_password_hash(data['password'])
+    new_user = User(username, email, name, hashed_password)
+    response = add_user(new_user.to_dict())
+    return response
 
-    user = add_user(User(username, email, name, hashed_password))
-    return user
+
+@auth.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data['email']
+    password = data['password']
+    user = get_user(email)
+    print(user)
+    return 'response'
