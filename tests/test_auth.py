@@ -1,6 +1,5 @@
-from py import test
 import pytest
-from app.api.auth import jwt, bcrypt, User
+from app.api.auth import jwt
 from app.db import delete_user
 
 test_user = {
