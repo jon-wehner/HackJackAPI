@@ -1,6 +1,7 @@
-from flask import Blueprint, current_app, g, request
+from flask import Blueprint, current_app, g, jsonify, request
 from werkzeug.local import LocalProxy
 from app.db import add_user, get_user
+from flask_jwt_extended import create_access_token
 
 auth = Blueprint('auth', __name__, url_prefix='/api/auth')
 
@@ -57,5 +58,9 @@ def login():
     email = data['email']
     password = data['password']
     user = get_user(email)
-    print(user)
-    return 'response'
+    if bcrypt.check_password_hash(user['hashed_password'], password):
+        access_token = create_access_token(identity=user['username'])
+        return jsonify(username=user['username'],
+                       name=user['name'], access_token=access_token)
+    else:
+        return {"error": "Invalid Credentials"}
