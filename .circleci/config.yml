@@ -1,25 +1,25 @@
 version: 2
 jobs:
-  test: 
+  test:
     - checkout
-      - run:
-        name: Setup venv
-        command: |
-          echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
-          echo 'export IMAGE_NAME=blackjack-api' >> $BASH_ENV 
-          virtualenv blackjack-api
-          . blackjack-api/bin/activate
-          pip install --no-cache-dir -r requirements.txt
-      - run:
-        name: Run Tests
-        command: |
-          . blackjack-api/bin/activate
-          pytest
+    - run:
+      name: Setup venv
+      command: |
+        echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
+        echo 'export IMAGE_NAME=blackjack-api' >> $BASH_ENV 
+        virtualenv blackjack-api
+        . blackjack-api/bin/activate
+        pip install --no-cache-dir -r requirements.txt
+    - run:
+      name: Run Tests
+      command: |
+        . blackjack-api/bin/activate
+        pytest
   build:
     docker:
       - image: docker:20.10.8-git
     steps:
-      - checkout      
+      - checkout
       - restore_cache:
           keys:
             - v1-{{ .Branch }}
