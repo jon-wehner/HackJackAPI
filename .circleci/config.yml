@@ -1,10 +1,23 @@
 version: 2
 jobs:
-  build:
+  test-and-build:
     docker:
       - image: docker:20.10.8-git
     steps:
       - checkout
+      - run:
+        name: Setup venv
+        command: |
+          echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
+          echo 'export IMAGE_NAME=blackjack-api' >> $BASH_ENV 
+          virtualenv blackjack-api
+          . blackjack-api/bin/activate
+          pip install --no-cache-dir -r requirements.txt
+      - run:
+        name: Run Tests
+        command: |
+        . blackjack-api/bin/activate
+        pytest
       - setup_remote_docker
       - restore_cache:
           keys:
@@ -28,3 +41,7 @@ jobs:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/app.tar
+  test:
+    executor: python/default
+    steps:
+      - checkout
