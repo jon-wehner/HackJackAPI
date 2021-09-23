@@ -13,4 +13,4 @@ RUN pip install -r requirements.txt
 
 COPY . .
 
-CMD gunicorn app:app
+CMD gunicorn 'app:create_app()'
