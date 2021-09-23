@@ -41,7 +41,6 @@ jobs:
           key: v1-{{ .Branch }}-{{ epoch }}
           paths:
             - /caches/app.tar
-  test:
-    executor: python/default
-    steps:
-      - checkout
+workflows:
+  test-and-deploy:
+    jobs: -test-and-build
