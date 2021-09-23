@@ -7,12 +7,10 @@ ENV FLASK_ENVIRONMENT=production
 
 EXPOSE 8080
 
-WORKDIR /app
-
 COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
-COPY ./app .
+COPY . .
 
-CMD ["flask", "run", "-p", "8080"]
+CMD gunicorn app:app
