@@ -12,19 +12,19 @@ jobs:
           paths:
             - /caches/app.tar
       - run:
-        name: Load Docker image cache
-        command: |
-          set +o pipefail
-          docker load -i /caches/app.tar | true
+          name: Load Docker image cache
+          command: |
+            set +o pipefail
+            docker load -i /caches/app.tar | true
       - run:
-        name: Build docker image
-        command: docker build --cache-from=app -t app .
+          name: Build docker image
+          command: docker build --cache-from=app -t app .
       - run:
-        name: Save image cache
-        command: |
-          mkdir -p /caches
-          docker save -o /caches/app.tar app
+          name: Save image cache
+          command: |
+            mkdir -p /caches
+            docker save -o /caches/app.tar app
       - save_cache:
-        key: v1-{{ .Branch }}-{{ epoch }}
-        paths:
-          - /caches/app.tar
+          key: v1-{{ .Branch }}-{{ epoch }}
+          paths:
+            - /caches/app.tar
