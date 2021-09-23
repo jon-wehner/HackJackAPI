@@ -1,0 +1,6 @@
+.venv
+Pipfile
+Pipfile.lock
+.env
+.DS_Store
+.cirlceci
