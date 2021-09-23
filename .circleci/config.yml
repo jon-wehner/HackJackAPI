@@ -43,4 +43,4 @@ jobs:
             - /caches/app.tar
 workflows:
   test-and-deploy:
-    jobs: -test-and-build
+    jobs: test-and-build
