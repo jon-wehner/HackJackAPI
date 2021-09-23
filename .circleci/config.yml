@@ -1,21 +1,14 @@
 version: 2
+orbs:
+  python: circleci/python@1.4.0
 jobs:
   test:
     steps:
       - checkout
-      - run:
-          name: Setup venv
-          command: |
-            echo 'export TAG=0.1.${CIRCLE_BUILD_NUM}' >> $BASH_ENV
-            echo 'export IMAGE_NAME=blackjack-api' >> $BASH_ENV 
-            virtualenv blackjack-api
-            . blackjack-api/bin/activate
-            pip install --no-cache-dir -r requirements.txt
-      - run:
-          name: Run Tests
-          command: |
-            . blackjack-api/bin/activate
-            pytest
+      - python/test:
+        args: '--dev'
+        pkg-manager: pipenv
+        test-tool: pytest
   build:
     docker:
       - image: docker:20.10.8-git
