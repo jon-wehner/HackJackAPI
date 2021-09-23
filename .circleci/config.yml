@@ -7,10 +7,10 @@ jobs:
       - checkout
       - setup_remote_docker
       - restore_cache:
-        keys:
-          - v1-{{ .Branch }}
-        paths:
-          - /caches/app.tar
+          keys:
+            - v1-{{ .Branch }}
+          paths:
+            - /caches/app.tar
       - run:
         name: Load Docker image cache
         command: |
