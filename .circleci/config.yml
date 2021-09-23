@@ -16,8 +16,8 @@ jobs:
       - run:
         name: Run Tests
         command: |
-        . blackjack-api/bin/activate
-        pytest
+          . blackjack-api/bin/activate
+          pytest
       - setup_remote_docker
       - restore_cache:
           keys:
