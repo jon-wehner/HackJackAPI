@@ -40,5 +40,4 @@ workflows:
   test-and-deploy:
     jobs:
       - test
-      - build:
-        retuires: -test
+      - build
