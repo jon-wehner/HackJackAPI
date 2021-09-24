@@ -14,15 +14,7 @@ jobs:
           command: |
             pipenv run pytest --version
           name: Run tests
-  deploy:
-    steps:
-      - gcp-cli/install_and_initialize_cli:
-        executor: gcp-cli/default
-      - run:
-          command: |
-            gcloud app deploy
 workflows: 
-  test-and-deploy:
+  test:
     jobs:
       - test-app
-      - deploy
