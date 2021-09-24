@@ -1,6 +1,7 @@
 version: 2.1
 orbs:
   python: circleci/python@1.4.0
+  gcp-cli: circle-ci/gcp@2.2.0
 jobs:
   test-app:
     executor: python/default
@@ -13,36 +14,15 @@ jobs:
           command: |
             pipenv run pytest --version
           name: Run tests
-  build:
-    docker:
-      - image: docker:20.10.8-git
+  deploy:
     steps:
-      - checkout
-      - setup_remote_docker
-      - restore_cache:
-          keys:
-            - v1-{{ .Branch }}
-          paths:
-            - /caches/app.tar
+      - gcp-cli/install_and_initialize_cli:
+        executor: gcp-cli/default
       - run:
-          name: Load Docker image cache
           command: |
-            set +o pipefail
-            docker load -i /caches/app.tar | true
-      - run:
-          name: Build docker image
-          command: docker build --cache-from=app -t app .
-      - run:
-          name: Save image cache
-          command: |
-            mkdir -p /caches
-            docker save -o /caches/app.tar app
-      - save_cache:
-          key: v1-{{ .Branch }}-{{ epoch }}
-          paths:
-            - /caches/app.tar
+            gcloud app deploy
 workflows: 
   test-and-deploy:
     jobs:
       - test-app
-      - build
+      - deploy
