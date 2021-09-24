@@ -7,9 +7,9 @@ jobs:
     steps:
       - checkout
       - python/test:
-        args: '--dev'
-        pkg-manager: pipenv
-        test-tool: pytest
+          args: '--dev'
+          pkg-manager: pipenv
+          test-tool: pytest
   build:
     docker:
       - image: docker:20.10.8-git
