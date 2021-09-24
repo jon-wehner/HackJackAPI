@@ -5,11 +5,14 @@ jobs:
   test-app:
     executor: python/default
     steps:
-      - checkout
-      - python/test:
-          args: '--dev'
-          pkg-manager: pipenv
-          test-tool: pytest
+       - checkout
+      - python/install-packages:
+          args: pytest
+          pkg-manager: pipenv      
+      - run: 
+          command: |
+            pipenv run pytest --version
+          name: Run tests
   build:
     docker:
       - image: docker:20.10.8-git
