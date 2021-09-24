@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   python: circleci/python@1.4.0
-  gcp-cli: circle-ci/gcp@2.2.0
 jobs:
   test-app:
     executor: python/default
