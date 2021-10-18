@@ -46,6 +46,9 @@ def register():
     username = data['username']
     email = data['email']
     name = data['name']
+    check_user = get_user(email)
+    if check_user is not None:
+        return {"error": "User Already Exists"}
     hashed_password = bcrypt.generate_password_hash(data['password'])
     new_user = User(username, email, name, hashed_password)
     response = add_user(new_user.to_dict())
