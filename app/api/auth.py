@@ -55,10 +55,12 @@ def register():
 @auth.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
+    print(data['email'])
     email = data['email']
     password = data['password']
     user = get_user(email)
-    if bcrypt.check_password_hash(user['hashed_password'], password):
+    if user['error'] is None and bcrypt.check_password_hash(
+            user['hashed_password'], password):
         access_token = create_access_token(identity=user['username'])
         return jsonify(username=user['username'],
                        name=user['name'], access_token=access_token)
