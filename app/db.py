@@ -22,7 +22,7 @@ db = LocalProxy(get_db)
 def get_user(email):
     user = db.users.find_one({"email": email})
     if user is None:
-        return {"error": "Invalid Credentials"}
+        return None
     return user
 
 
