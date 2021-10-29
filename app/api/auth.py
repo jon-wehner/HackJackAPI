@@ -51,7 +51,7 @@ def register():
     check_user = get_user(email)
     if check_user is not None:
         return {"error": "User already exists"}
-    if password is not confirm_password:
+    if password != confirm_password:
         return {"error": "Password fields must match"}
     hashed_password = bcrypt.generate_password_hash(data['password'])
     new_user = User(username, email, name, hashed_password)
