@@ -46,9 +46,13 @@ def register():
     username = data['username']
     email = data['email']
     name = data['name']
+    password = data['password']
+    confirm_password = data['confirmPassword']
     check_user = get_user(email)
     if check_user is not None:
-        return {"error": "User Already Exists"}
+        return {"error": "User already exists"}
+    if password != confirm_password:
+        return {"error": "Password fields must match"}
     hashed_password = bcrypt.generate_password_hash(data['password'])
     new_user = User(username, email, name, hashed_password)
     response = add_user(new_user.to_dict())
@@ -58,7 +62,6 @@ def register():
 @auth.route('/login', methods=['POST'])
 def login():
     data = request.get_json()
-    print(data['email'])
     email = data['email']
     password = data['password']
     user = get_user(email)
